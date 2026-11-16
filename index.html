@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>My Everything ❤️</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&family=Dancing+Script:wght@600;700&family=Playfair+Display:ital,wght@0,600;1,600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- خلفية القلوب الطائرة -->
+  <div id="floating-hearts-container" aria-hidden="true"></div>
+
+  <!-- =========================================================
+       المرحلة 1: شاشة الظرف وكلمة السر
+       ========================================================= -->
+  <section id="screen-envelope" class="screen active">
+    <div class="envelope-wrapper">
+      <div class="envelope" id="envelope-box">
+        <div class="envelope-back"></div>
+        <div class="envelope-letter-preview"></div>
+        <div class="envelope-left"></div>
+        <div class="envelope-right"></div>
+        <div class="envelope-bottom"></div>
+        <div class="envelope-flap"></div>
+
+        <!-- ستيكر العنوان على الظرف -->
+        <div class="envelope-label-card">
+          <span class="label-top" id="env-top-label">LOVE</span>
+          <h1 class="label-title" id="env-title">my everything ❤️</h1>
+        </div>
+
+        <!-- طابع بريد صغير -->
+        <div class="envelope-stamp">★</div>
+
+        <!-- الختم الشمعي الأحمر -->
+        <div class="wax-seal">
+          <div class="wax-inner">
+            <img id="wax-avatar" src="cover.jpg" alt="Love" />
+          </div>
+        </div>
+      </div>
+
+      <!-- نموذج إدخال الباسورد -->
+      <div class="password-area">
+        <div class="lock-icon">🔒</div>
+        <p class="secret-hint" id="env-hint">ENTER THE SECRET WORD</p>
+        <div class="input-group">
+          <input type="password" id="password-input" placeholder="• password •" autocomplete="off" />
+        </div>
+        <button id="unlock-btn" class="primary-pill-btn">💞 Unlock 💞</button>
+        <p id="error-msg" class="error-text"></p>
+      </div>
+    </div>
+  </section>
+
+  <!-- =========================================================
+       المرحلة 2: انتقال الورد المبهج
+       ========================================================= -->
+  <div id="flower-transition" class="flower-overlay hidden">
+    <div class="flower-burst" id="flower-burst"></div>
+  </div>
+
+  <!-- =========================================================
+       المرحلة 3: شاشة الرسالة الترحيبية (الكتابة التلقائية)
+       ========================================================= -->
+  <section id="screen-intro" class="screen hidden">
+    <div class="intro-card">
+      <div class="card-tape"></div>
+      <div class="card-diamond">◆</div>
+      <div class="intro-emoji" id="intro-emoji">😍</div>
+      <div class="typewriter-container">
+        <p id="typewriter-text"></p><span class="cursor">|</span>
+      </div>
+      <div class="card-divider"></div>
+      <button id="intro-next-btn" class="soft-pill-btn">next →</button>
+    </div>
+  </section>
+
+  <!-- =========================================================
+       المرحلة 4: الصفحة الرئيسية (الغلاف + العداد + الصور + الرسالة)
+       ========================================================= -->
+  <main id="screen-main" class="main-container hidden">
+    
+    <!-- الهيرو / صورة البداية -->
+    <header class="hero-section">
+      <div class="hero-bg" id="hero-bg"></div>
+      <div class="hero-gradient"></div>
+      <div class="hero-content">
+        <div class="glass-badge" id="hero-title">بحبك 💕</div>
+        <div class="scroll-indicator">⌄</div>
+      </div>
+    </header>
+
+    <!-- قسم العداد -->
+    <section class="counter-section">
+      <h2 class="section-heading" id="counter-title">بدايتنا 💞</h2>
+      <div class="counter-card">
+        <p class="since-date" id="since-date-text">💖 سوا من 03-10-2025 💖</p>
+        <div class="timer-grid" dir="ltr">
+          <div class="time-box">
+            <span class="time-val" id="t-days">00</span>
+            <span class="time-lbl">يوم</span>
+          </div>
+          <div class="time-box">
+            <span class="time-val" id="t-hours">00</span>
+            <span class="time-lbl">ساعة</span>
+          </div>
+          <div class="time-box">
+            <span class="time-val" id="t-minutes">00</span>
+            <span class="time-lbl">دقيقة</span>
+          </div>
+          <div class="time-box">
+            <span class="time-val" id="t-seconds">00</span>
+            <span class="time-lbl">ثانية</span>
+          </div>
+        </div>
+        <p class="counter-sub" id="counter-sub-text">❤️ كل ثانية بتعدي وانتِ في قلبي</p>
+      </div>
+    </section>
+
+    <!-- قسم الذكريات والصور (يتم بناؤه تلقائياً من config.js) -->
+    <section id="memories-section" class="memories-section">
+      <div id="memories-list" class="memories-list"></div>
+
+      <!-- زر الانتقال للرسالة النهائية -->
+      <div class="action-center">
+        <button id="show-message-btn" class="glow-pink-btn">❤️ message ❤️</button>
+      </div>
+    </section>
+
+    <!-- قسم الرسالة النهائية (يظهر عند الضغط على message) -->
+    <section id="final-message-section" class="final-message-section hidden">
+      <div class="top-sparkle-heart">💖</div>
+      <div class="final-card" id="final-card-lines">
+        <!-- تضاف السطور تلقائياً -->
+      </div>
+      <div class="action-center">
+        <button id="back-memories-btn" class="glow-pink-btn">🔄 memories</button>
+      </div>
+      <div class="footer-brand" id="footer-signature">💗 Lovely 💗</div>
+    </section>
+
+  </main>
+
+  <!-- =========================================================
+       مشغل الموسيقى السفلي الثابت (يظهر بعد فتح الظرف)
+       ========================================================= -->
+  <div id="music-player-bar" class="music-bar hidden" dir="ltr">
+    <img id="player-cover" src="cover.jpg" alt="Cover" class="player-thumb" />
+    
+    <div class="player-controls">
+      <button id="prev-song-btn" class="ctrl-btn" title="Previous">⏮</button>
+      <button id="play-pause-btn" class="play-btn" title="Play/Pause">▶</button>
+      <button id="next-song-btn" class="ctrl-btn" title="Next">⏭</button>
+    </div>
+
+    <div class="player-info">
+      <div class="player-top-row">
+        <span id="song-title" class="song-title">وانت معايا 😍</span>
+        <span id="song-index" class="song-index">1/2</span>
+      </div>
+      <div class="progress-bar-wrapper" id="progress-wrapper">
+        <div class="progress-fill" id="progress-fill"></div>
+      </div>
+      <div class="time-row">
+        <span id="current-time">0:00</span>
+        <span id="total-time">0:36</span>
+      </div>
+    </div>
+
+    <audio id="audio-element" preload="metadata"></audio>
+  </div>
+
+  <!-- زر عائم لإضافة صور مؤقتة للتجربة الفورية من المتصفح -->
+  <button id="quick-preview-add-btn" class="floating-add-btn" title="جرب إضافة صور من جهازك فوراً">➕ جرب صورك</button>
+  <input type="file" id="quick-image-input" accept="image/*" multiple hidden />
+
+  <script src="config.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
